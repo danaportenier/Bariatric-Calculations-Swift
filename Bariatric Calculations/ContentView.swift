@@ -72,30 +72,6 @@ func ideal_body_weight() -> Double {
     var obesityClassification: String { obesity_classification()
     }
     
-//    //Excess Weight lbs
-//    function _excesswt_lbs(weight_lbs, ibw_lbs) {
-//      excesswt_lbs = weight_lbs - ibw_lbs;
-//      return excesswt_lbs;
-//    }
-//
-//    //Excess Weight Kg
-//    function _excesswt_kg(weight_kg, ibw_kg) {
-//      excesswt_kg = weight_kg - ibw_kg;
-//      return excesswt_kg;
-//    }
-//
-//    // Percent Body Fat
-//    function _body_fat_percentage(age_current, male_female, bmi) {
-//      if (male_female == "Male") {
-//        y = 1;
-//      } else if (male_female == "Female") {
-//        y = 0;
-//      }
-//      body_fat_percentage = Math.round(
-//        Number(1.39 * bmi + 0.16 * age_current - 10.34 * y - 9)
-//      );
-//      return body_fat_percentage;
-//    }
     
     var excess_wt_lbs: Double {
         weight_lbs_entered - ideal_body_weight_lbs
@@ -118,6 +94,29 @@ func ideal_body_weight() -> Double {
     var body_fat_percentage: Double {
         body_fat_percentage_calculation()
     }
+    
+//    // Weight loss ranges after each bariatric procedure
+//
+//    /*Higher End of Excess Weight Loss Expected
+//    Gastric Bypass: 60%–80%
+//    Duodenal Switch: 60%–100%
+//
+//    Lower End of Excess Weight Loss Expected
+//    Lap Band: 10%–80%
+//    Gastric Sleeve: 40%–80%  */
+//
+//    const percent = [0.1, 0.4, 0.6, 0.7, 0.8, 1];
+//    function _weight_after_percentage_ewl(percent, weight_lbs, excesswt_lbs) {
+//      x = weight_lbs - percent * excesswt_lbs;
+//      return x;
+//    }
+//
+//    // The delta in weight predicted with the typical %EWL ranges for the various procedures
+//    function _predicted_delta_wt(percent, excesswt_lbs) {
+//      let x = percent * excesswt_lbs;
+//      return x;
+//    }
+
     
     var body: some View {
         
