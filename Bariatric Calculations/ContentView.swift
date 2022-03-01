@@ -16,7 +16,21 @@ struct ContentView: View {
     @State private var height_inches_entered: Double = 1
     @State private var gender_entered: String = "Female"
     @State private var weight_lbs_entered: Double = 200
-
+    @FocusState private var ageIsFocused: Bool
+    @FocusState private var ftIsFocused: Bool
+    @FocusState private var inchesIsFocused: Bool
+    @FocusState private var wtIsFocused: Bool
+    
+    //@FocusState private var amountIsFocused: Bool
+    // goes in the text feild for appropriate spot .focused($amountIsFocused)
+    // goes into the navigationtitle thing a the bottom Button("Done"){
+//    amountIsFocused = false}
+    
+//    if !self.$shouldHide.wrappedValue {
+//                       Button("Detect") {
+//                           self.imageDetectionVM.detect(self.selectedImage)
+//                       }
+    
     
     let gender = ["Female", "Male"]
     var height_total_inches: Double {
@@ -95,28 +109,47 @@ func ideal_body_weight() -> Double {
         body_fat_percentage_calculation()
     }
     
-//    // Weight loss ranges after each bariatric procedure
-//
-//    /*Higher End of Excess Weight Loss Expected
-//    Gastric Bypass: 60%–80%
-//    Duodenal Switch: 60%–100%
-//
-//    Lower End of Excess Weight Loss Expected
-//    Lap Band: 10%–80%
-//    Gastric Sleeve: 40%–80%  */
-//
-//    const percent = [0.1, 0.4, 0.6, 0.7, 0.8, 1];
-//    function _weight_after_percentage_ewl(percent, weight_lbs, excesswt_lbs) {
-//      x = weight_lbs - percent * excesswt_lbs;
-//      return x;
-//    }
-//
-//    // The delta in weight predicted with the typical %EWL ranges for the various procedures
-//    function _predicted_delta_wt(percent, excesswt_lbs) {
-//      let x = percent * excesswt_lbs;
-//      return x;
-//    }
 
+
+    
+    func weight_after_percent_ewl(percent: Double)-> Double {
+        let x = weight_lbs_entered - percent * excess_wt_lbs
+        return x
+    }
+    // The delta in weight predicted with the typical %EWL ranges for the various procedures
+    func predicted_delta_wt(percent: Double) -> Double {
+        let x = percent * excess_wt_lbs
+        return x
+    }
+    // Sleeve Predicted Results
+    var sleeve_weight_after_percent_ewl_low: Double {weight_after_percent_ewl(percent: 0.4)}
+    var sleeve_weight_after_percent_ewl_high: Double {weight_after_percent_ewl(percent: 0.8)}
+    var sleeve_predicted_delta_wt_low: Double {
+        predicted_delta_wt(percent: 0.4)
+    }
+    var sleeve_predicted_delta_wt_high: Double {
+        predicted_delta_wt(percent: 0.8)
+    }
+    
+    // Gastric Bypass Predicted Results
+    var RYGB_weight_after_percent_ewl_low: Double {weight_after_percent_ewl(percent: 0.6)}
+    var RYGB_weight_after_percent_ewl_high: Double {weight_after_percent_ewl(percent: 0.8)}
+    var RYGB_predicted_delta_wt_low: Double {
+        predicted_delta_wt(percent: 0.6)
+    }
+    var RYGB_predicted_delta_wt_high: Double {
+        predicted_delta_wt(percent: 0.8)
+    }
+    
+    // Duodenal Switch Predicted Results
+    var DS_weight_after_percent_ewl_low: Double {weight_after_percent_ewl(percent: 0.6)}
+    var DS_weight_after_percent_ewl_high: Double {weight_after_percent_ewl(percent: 1.0)}
+    var DS_predicted_delta_wt_low: Double {
+        predicted_delta_wt(percent: 0.6)
+    }
+    var DS_predicted_delta_wt_high: Double {
+        predicted_delta_wt(percent: 1.0)
+    }
     
     var body: some View {
         
@@ -126,23 +159,28 @@ func ideal_body_weight() -> Double {
                 Section{
                     HStack{
                     TextField("Duke MRN (Optional)", text: $mrn_entered)
+                    
                     Text("|   Age:")
                         TextField("Age", value: $age_entered, format: .number)
                             .keyboardType(.decimalPad)
+                            .focused($ageIsFocused)
                     }
                     HStack{
                         Text("Ft.")
                             .padding(0)
                         TextField("ft.", value: $height_ft_entered, format: .number)
                             .keyboardType(.decimalPad)
+                            .focused($ftIsFocused)
                         Text("Inches")
                             .padding(0)
                         TextField("Inch", value: $height_inches_entered, format: .number)
                             .keyboardType(.decimalPad)
+                            .focused($inchesIsFocused)
                         Text("Wt.")
                             .padding(0)
                         TextField("Wt.", value: $weight_lbs_entered, format: .number)
                             .keyboardType(.decimalPad)
+                            .focused($wtIsFocused)
                     }
                     HStack{
                         Picker("Gender", selection: $gender_entered){
@@ -197,7 +235,12 @@ func ideal_body_weight() -> Double {
                     }
                     
                 }header: {
-                    Text("Calculated Data")
+                    Text("Calculated Demographic Data")
+                }
+                Section{
+                    
+                }header: {
+                    Text("Predicted Outcomes")
                 }
             }.navigationTitle("Bariatric Calculator")
 //                .toolbar {
