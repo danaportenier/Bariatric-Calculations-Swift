@@ -238,8 +238,46 @@ func ideal_body_weight() -> Double {
                     Text("Calculated Demographic Data")
                 }
                 Section{
+                    VStack{
+                        HStack{
+                            Text("Sleeve Gastrectomy").underline()
+                            Spacer()
+                        }
+                                HStack{
+                                    Text("40 - 80 %EWL |")
+                                    
+                                    Text("Wt Delta ( \(Int(sleeve_predicted_delta_wt_low)) - \(Int(sleeve_predicted_delta_wt_high))) |")
+                                    Text("Wt ( \(Int(sleeve_weight_after_percent_ewl_high)) - \(Int(sleeve_weight_after_percent_ewl_low) ))")
+                                    
+                                    
+                                }.font(.footnote)
+                        HStack{
+                            Text("Gastric Bypass").underline()
+                            Spacer()
+                        }
+                        HStack{
+                            Text("60 - 80 %EWL |")
+                            
+                            Text("Wt Delta ( \(Int(RYGB_predicted_delta_wt_low)) - \(Int(RYGB_predicted_delta_wt_high))) |")
+                            Text("Wt ( \(Int(RYGB_weight_after_percent_ewl_high)) - \(Int(RYGB_weight_after_percent_ewl_low) ))")
+                            
+                            
+                        }.font(.footnote)
+                        HStack{
+                            Text("Duodenal Switch").underline()
+                            Spacer()
+                        }
+                        HStack{
+                            Text("60 - 100 %EWL |")
+                            
+                            Text("Wt Delta ( \(Int(DS_predicted_delta_wt_low)) - \(Int(DS_predicted_delta_wt_high))) |")
+                            Text("Wt ( \(Int(DS_weight_after_percent_ewl_high)) - \(Int(DS_weight_after_percent_ewl_low) ))")
+                            
+                            
+                        }.font(.footnote)
+                    }
                     
-                }header: {
+                }header:{
                     Text("Predicted Outcomes")
                 }
             }.navigationTitle("Bariatric Calculator")
